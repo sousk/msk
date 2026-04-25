@@ -99,6 +99,11 @@ func TestMask(t *testing.T) {
 			want:  `{"token": "<REDACTED_TOKEN>"}`,
 		},
 		{
+			name:  "json token with dots (discord-style)",
+			input: `{"token": "AAAAAAAAAAAAAAAAAAAAAAAAAA.BBBBBB.CCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC"}`,
+			want:  `{"token": "<REDACTED_TOKEN>"}`,
+		},
+		{
 			name:  "plain text passes through",
 			input: "hello world 2026",
 			want:  "hello world 2026",

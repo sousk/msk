@@ -176,8 +176,9 @@ func init() {
 		},
 
 		// Generic token key — catches JSON {"token": "val"} and config token=val.
+		// Dots included to handle Discord-style base64.base64.base64 tokens.
 		{
-			re:   regexp.MustCompile(`(?i)(["']?\btoken\b["']?\s*[:=]\s*["']?)[A-Za-z0-9_\-]{16,}(["']?)`),
+			re:   regexp.MustCompile(`(?i)(["']?\btoken\b["']?\s*[:=]\s*["']?)[A-Za-z0-9._\-]{16,}(["']?)`),
 			tmpl: "${1}<REDACTED_TOKEN>${2}",
 		},
 

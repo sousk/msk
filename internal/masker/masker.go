@@ -167,12 +167,18 @@ func init() {
 		},
 
 		// x-api-key header — must run before the generic api_key rule.
-		{re: regexp.MustCompile(`(?i)\bx-api-key\s*:\s*["']?[A-Za-z0-9_\-]{16,}["']?`), tmpl: "x-api-key: <REDACTED_API_KEY>"},
+		{re: regexp.MustCompile(`(?i)(["']?x-api-key["']?\s*:\s*["']?)[A-Za-z0-9_\-]{16,}(["']?)`), tmpl: "${1}<REDACTED_API_KEY>${2}"},
 
-		// Generic api_key / api-key / apiKey assignment
+		// Generic api_key / api-key / apiKey — handles JSON ("apiKey": "val") and shell (api_key=val).
 		{
-			re:   regexp.MustCompile(`(?i)\b(api[_-]?key\s*[:=]\s*["']?)[A-Za-z0-9_\-]{16,}(["']?)\b`),
+			re:   regexp.MustCompile(`(?i)(["']?api[_-]?key["']?\s*[:=]\s*["']?)[A-Za-z0-9_\-]{16,}(["']?)`),
 			tmpl: "${1}<REDACTED_API_KEY>${2}",
+		},
+
+		// Generic token key — catches JSON {"token": "val"} and config token=val.
+		{
+			re:   regexp.MustCompile(`(?i)(["']?\btoken\b["']?\s*[:=]\s*["']?)[A-Za-z0-9_\-]{16,}(["']?)`),
+			tmpl: "${1}<REDACTED_TOKEN>${2}",
 		},
 
 		// password= / password: (quoted or unquoted value)

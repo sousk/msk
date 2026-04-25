@@ -5,7 +5,7 @@ import (
 	"io"
 	"os"
 
-	"masktokens/internal/masker"
+	"msk/internal/masker"
 )
 
 func main() {

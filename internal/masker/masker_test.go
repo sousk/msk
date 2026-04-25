@@ -89,6 +89,16 @@ func TestMask(t *testing.T) {
 			want:  "redis://user:<REDACTED_PASSWORD>@localhost:6379",
 		},
 		{
+			name:  "json apiKey field",
+			input: `{"apiKey": "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdef"}`,
+			want:  `{"apiKey": "<REDACTED_API_KEY>"}`,
+		},
+		{
+			name:  "json token field",
+			input: `{"token": "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdef"}`,
+			want:  `{"token": "<REDACTED_TOKEN>"}`,
+		},
+		{
 			name:  "plain text passes through",
 			input: "hello world 2026",
 			want:  "hello world 2026",
